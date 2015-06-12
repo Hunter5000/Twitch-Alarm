@@ -238,9 +238,9 @@ function go(streamURL, streamResolution) {
 var file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsILocalFile);
 var path_l;
 if(preferences.prefs.path === undefined ){
-	path_l="/usr/local/bin/livestreamer"
+	path_l="/usr/local/bin/livestreamer";
 }else{
-	path_l=preferences.prefs.path
+	path_l=preferences.prefs.path;
 }
         file.initWithPath(path_l);
         if (file.exists() && path_l.indexOf("livestreamer") > -1) {
