@@ -236,8 +236,14 @@ function go(streamURL, streamResolution) {
     
    
 var file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsILocalFile);
-        file.initWithPath("/usr/local/bin/livestreamer");
-        if (file.exists() && "/usr/local/bin/livestreamer".indexOf("livestreamer") > -1) {
+var path_l;
+if(preferences.prefs.path === undefined ){
+	path_l="/usr/local/bin/livestreamer"
+}else{
+	path_l=preferences.prefs.path
+}
+        file.initWithPath(path_l);
+        if (file.exists() && path_l.indexOf("livestreamer") > -1) {
             var process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
 
             process.init(file);
