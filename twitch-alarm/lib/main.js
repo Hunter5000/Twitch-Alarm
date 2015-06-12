@@ -660,7 +660,7 @@ exports.onUnload = function(reason) {
         ss.storage.streamIds = null
         ss.storage.debounce = null
 
-        //Interface
+        //Interface 
         ss.storage.liveQuality = null
         ss.storage.hideInfo = null
         ss.storage.hideOffline = null
