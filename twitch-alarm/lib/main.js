@@ -1,3 +1,4 @@
+const { Cc, Ci } = require("chrome");
 var {
     ToggleButton
 } = require("sdk/ui/button/toggle");
@@ -121,6 +122,18 @@ var panel = panels.Panel({
     onHide: handleHide
 });
 
+var not_found_panel = panels.Panel({
+    contentURL: self.data.url("panel.html"),
+    width: 280,
+    height: 70
+});
+//starting livestreamer msg
+var launch_panel = panels.Panel({
+    contentURL: self.data.url("launching.html"),
+    width: 110,
+    height: 50
+});
+
 var settingsPanel = panels.Panel({
     contentURL: self.data.url("settings.html"),
     width: 660,
@@ -203,45 +216,48 @@ function containsValue(list, obj) {
 
 //Credit for the next function goes to Nekto of "Livestreamer launch on twitch.tv"
 
-function go(url, quality) {
-    var {
-        Cc, Ci
-    } = require("chrome");
-    // create an nsIFile for the executable
-    var file = Cc["@mozilla.org/file/local;1"]
-        .createInstance(Ci.nsIFile);
-    var platform = require("sdk/system").platform;
-    //console.log(platform)
-    if (platform.toLowerCase() == "winnt") {
-        //For Windows
-        /*Initializing with full path to cmd.exe which should normally be in "ComSpec" environment variable*/
-        file.initWithPath(
-            Cc["@mozilla.org/process/environment;1"]
-            .getService(Ci.nsIEnvironment)
-            .get("COMSPEC")
-        );
-    } else {
-        //For non-Windows? Hopefully this works
-        file.initWithPath("/usr/bin/open");
-    }
-    // create an nsIProcess
-    var process = Cc["@mozilla.org/process/util;1"]
-        .createInstance(Ci.nsIProcess);
-
-    process.init(file);
+function go(streamURL, streamResolution) {
     var args;
-    // Run the process.
-    // If first param is true, calling thread will be blocked until
-    // called process terminates.
-    // Second and third params are used to pass command-line arguments
-    // to the process.
-    if (platform == "darwin") {
-        args = ["-a", "/Library/Frameworks/Python.framework/Versions/2.7/bin/livestreamer", "--args", url, quality];
+    var stream_res;
+    var optargs;
+    var currentURL;
+
+    if (streamResolution === undefined) {
+        stream_res = "best";
     } else {
-        args = ["/K", "livestreamer", url, quality];
+        stream_res = streamResolution;
     }
-    process.run(false, args, args.length);
-};
+    if (streamURL === undefined) {
+        currentURL = tabs.activeTab.url;
+    } else {
+        currentURL = streamURL;
+    }
+    args = [currentURL, stream_res];
+    
+   
+var file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsILocalFile);
+var path_l;
+if(preferences.prefs.path === undefined ){
+	path_l="/usr/local/bin/livestreamer";
+}else{
+	path_l=preferences.prefs.path;
+}
+        file.initWithPath(path_l);
+        if (file.exists() && path_l.indexOf("livestreamer") > -1) {
+            var process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
+
+            process.init(file);
+            process.run(false, args, args.length);
+ 		launch_panel.show({
+                position: button
+            });
+        } else {
+            not_found_panel.show({
+                position: button
+            });
+        }
+    
+}
 
 //Credit for these next four functions goes to Ben Clive of "Twitch.tv Stream Browser"
 

@@ -13,6 +13,13 @@
     "label": "Open settings page",
     "name": "settingsButton",
     "title": "Click to access the settings page"
-  }]
+  },
+  {
+        "name": "path",
+        "title": "Path to livestreamer",
+        "description": "Path to livestreamer executable",
+        "type": "string",
+        "value": ""
+    }]
 }
 
