@@ -1,3 +1,7 @@
+addon.port.on("alarmImageUpdate", function(alarmImageURL) {
+	document.getElementById("alarmImage").src = alarmImageURL;
+});
+
 addon.port.on("alarmPanelTextUpdate", function(alarmText) {
 	document.getElementById("alarmText").textContent = alarmText;
 });
