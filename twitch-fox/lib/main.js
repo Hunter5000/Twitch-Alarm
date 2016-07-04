@@ -275,6 +275,8 @@ alarm = {
 			var alarmPanel = panels.Panel({
 				contentURL: self.data.url("alarmPanel.html")
 			});
+			alarmPanel.port.emit("alarmPanelTextUpdate", text);
+			alarmPanel.port.emit("alarmPanelTitleUpdate", title);
 			alarmPanel.show();
 		}
 		else {
