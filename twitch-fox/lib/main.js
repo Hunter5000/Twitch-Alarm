@@ -271,24 +271,32 @@ alarm = {
                 text = _("clickHere");
                 break;
         }
-        notifications.notify({
-            title: title,
-            text: text,
-            iconURL: obj.logo || obj.type === "game" && "http://static-cdn.jtvnw.net/ttv-boxart/" + obj.name + "-56x78.jpg" || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png",
-            onClick: function () {
-				setTimeout(function() {
-					utils.getMostRecentBrowserWindow().focus();
-					ss.storage.interFollowedMode = true;
-					ss.storage.interMode = type !== "onOnlineGame" ? "channels" : "games";
-					panel.port.emit("settingsUpdate", ss.storage);
-					if (searchHistory.length) {
-						searchHistory = [];
-						panel.port.emit("endSearch", searchHistory);
-					}
-					panel.show();
-				}, 200);
-            }
-        });
+		if (ss.storage.alarmPanel) {
+			var alarmPanel = panels.Panel({
+				contentURL: self.data.url("alarmPanel.html")
+			});
+			alarmPanel.show();
+		}
+		else {
+			notifications.notify({
+				title: title,
+				text: text,
+				iconURL: obj.logo || obj.type === "game" && "http://static-cdn.jtvnw.net/ttv-boxart/" + obj.name + "-56x78.jpg" || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png",
+				onClick: function () {
+					setTimeout(function() {
+						utils.getMostRecentBrowserWindow().focus();
+						ss.storage.interFollowedMode = true;
+						ss.storage.interMode = type !== "onOnlineGame" ? "channels" : "games";
+						panel.port.emit("settingsUpdate", ss.storage);
+						if (searchHistory.length) {
+							searchHistory = [];
+							panel.port.emit("endSearch", searchHistory);
+						}
+						panel.show();
+					}, 200);
+				}
+			});
+		}
     },
     set: function (obj, type) {
 		if (panel.isShowing) {
