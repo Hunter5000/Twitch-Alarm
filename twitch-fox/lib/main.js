@@ -278,7 +278,7 @@ alarm = {
 				height: 113,
 			});
 			alarmPanel.port.emit("alarmImageUpdate", obj.logo || obj.type === "game" && "http://static-cdn.jtvnw.net/ttv-boxart/" + obj.name + "-56x78.jpg" || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png");
-			alarmPanel.port.emit("alarmPanelTextUpdate", text);
+			alarmPanel.port.emit("alarmPanelTextUpdate", '"' + obj.status + '"');
 			alarmPanel.port.emit("alarmPanelTitleUpdate", title);
 			alarmPanel.show();
 		}
