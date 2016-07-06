@@ -1,7 +1,7 @@
 #alarmImage	{
 	position: absolute;
 	left: 5px;
-	top: 10px;
+	top: 30px;
 	width: 78px;
 	height: 78px;
 }
@@ -9,13 +9,13 @@
 #alarmText {
 	position: absolute;
 	left: 90px;
-	top: 40px;
+	top: 35px;
 	height: 33px;
 }
 
 #alarmTitle {
 	position: absolute;
-	left: 90px;
+	left: 5px;
 	top: 0px
 	height: 33px;
 }

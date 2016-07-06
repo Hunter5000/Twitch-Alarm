@@ -275,7 +275,7 @@ alarm = {
 			var alarmPanel = panels.Panel({
 				contentURL: self.data.url("alarmPanel.html"),
 				width: 330,
-				height: 95,
+				height: 113,
 			});
 			alarmPanel.port.emit("alarmImageUpdate", obj.logo || obj.type === "game" && "http://static-cdn.jtvnw.net/ttv-boxart/" + obj.name + "-56x78.jpg" || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png");
 			alarmPanel.port.emit("alarmPanelTextUpdate", text);
